@@ -30,6 +30,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   dio: ^3.0.10
   file_picker: ^3.0.0
+  flutter_mobx: ^1.1.0+2
+  flutter_screenutil: ^4.0.3
+  provider: ^5.0.0
 
 dev_dependencies:
   flutter_test:
