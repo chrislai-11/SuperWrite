@@ -1,4 +1,5 @@
 import 'package:fltwrite/pages/edit/index.dart';
+import 'package:fltwrite/pages/intro/index.dart';
 import 'package:fltwrite/store/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,7 +18,7 @@ class App extends StatelessWidget {
     return ScreenUtilInit(
         designSize: Size(1792, 828),
         builder: () => MaterialApp(
-              home: EditPage(),
+              home: IntroPage(),
             ));
   }
 }

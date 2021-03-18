@@ -31,9 +31,11 @@ class WPageState extends State<WPage> {
       appBar: hasAppBar
           ? AppBar(
               title: Text(barTitle),
+              leading: null,
             )
           : this.buildAppBar(context),
       body: this.buildBody(context),
+      bottomNavigationBar: BottomNavigationBar(),
     );
   }
 }
