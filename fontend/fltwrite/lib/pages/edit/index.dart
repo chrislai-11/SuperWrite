@@ -11,6 +11,7 @@ class EditPage extends WPage {
 
 class _EditPageState extends WPageState {
   final String barTitle = "编辑";
+  final int currIndex = 1;
   String _fileName;
   List<PlatformFile> _paths;
   String _directoryPath;

@@ -19,10 +19,9 @@ class _IntroPageState extends WPageState {
   Widget buildBody(BuildContext context) {
     return Center(
       child: ElevatedButton(
-        child: Text("编辑"),
+        child: Text("马上开始吧"),
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: routes['/editPage']));
+          Navigator.of(context).pushReplacementNamed('/editPage');
         },
       ),
     );
