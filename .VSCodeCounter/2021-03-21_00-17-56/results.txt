@@ -1,0 +1,113 @@
+Date : 2021-03-21 00:17:56
+Directory : /Users/chris/Desktop/SuperWrite
+Total : 43 files,  1126 codes, 126 comments, 157 blanks, all 1409 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| Dart       |         18 |        605 |         28 |         78 |        711 |
+| JSON       |          3 |        168 |          0 |          3 |        171 |
+| XML        |          9 |        125 |         51 |         11 |        187 |
+| Groovy     |          3 |         81 |          3 |         20 |        104 |
+| Python     |          1 |         59 |         16 |         17 |         92 |
+| YAML       |          1 |         26 |         12 |          8 |         46 |
+| HTML       |          1 |         26 |         15 |          5 |         46 |
+| Markdown   |          3 |         15 |          0 |         10 |         25 |
+| Swift      |          1 |         12 |          0 |          2 |         14 |
+| Properties |          2 |          8 |          1 |          2 |         11 |
+| C++        |          1 |          1 |          0 |          1 |          2 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                           | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                              |         43 |      1,126 |        126 |        157 |      1,409 |
+| backend                                                                                                        |          1 |         59 |         16 |         17 |         92 |
+| backend/src                                                                                                    |          1 |         59 |         16 |         17 |         92 |
+| fontend                                                                                                        |         41 |      1,065 |        110 |        139 |      1,314 |
+| fontend/fltwrite                                                                                               |         41 |      1,065 |        110 |        139 |      1,314 |
+| fontend/fltwrite/android                                                                                       |         12 |        153 |         53 |         31 |        237 |
+| fontend/fltwrite/android/app                                                                                   |          8 |        110 |         52 |         20 |        182 |
+| fontend/fltwrite/android/app/src                                                                               |          7 |         64 |         49 |          9 |        122 |
+| fontend/fltwrite/android/app/src/debug                                                                         |          1 |          4 |          3 |          1 |          8 |
+| fontend/fltwrite/android/app/src/main                                                                          |          5 |         56 |         43 |          7 |        106 |
+| fontend/fltwrite/android/app/src/main/res                                                                      |          4 |         26 |         32 |          6 |         64 |
+| fontend/fltwrite/android/app/src/main/res/drawable                                                             |          1 |          4 |          7 |          2 |         13 |
+| fontend/fltwrite/android/app/src/main/res/drawable-v21                                                         |          1 |          4 |          7 |          2 |         13 |
+| fontend/fltwrite/android/app/src/main/res/values                                                               |          1 |          9 |          9 |          1 |         19 |
+| fontend/fltwrite/android/app/src/main/res/values-night                                                         |          1 |          9 |          9 |          1 |         19 |
+| fontend/fltwrite/android/app/src/profile                                                                       |          1 |          4 |          3 |          1 |          8 |
+| fontend/fltwrite/android/gradle                                                                                |          1 |          5 |          1 |          1 |          7 |
+| fontend/fltwrite/android/gradle/wrapper                                                                        |          1 |          5 |          1 |          1 |          7 |
+| fontend/fltwrite/ios                                                                                           |          7 |        222 |          2 |          9 |        233 |
+| fontend/fltwrite/ios/Runner                                                                                    |          7 |        222 |          2 |          9 |        233 |
+| fontend/fltwrite/ios/Runner/Assets.xcassets                                                                    |          3 |        148 |          0 |          4 |        152 |
+| fontend/fltwrite/ios/Runner/Assets.xcassets/AppIcon.appiconset                                                 |          1 |        122 |          0 |          1 |        123 |
+| fontend/fltwrite/ios/Runner/Assets.xcassets/LaunchImage.imageset                                               |          2 |         26 |          0 |          3 |         29 |
+| fontend/fltwrite/ios/Runner/Base.lproj                                                                         |          2 |         61 |          2 |          2 |         65 |
+| fontend/fltwrite/lib                                                                                           |         17 |        597 |         12 |         72 |        681 |
+| fontend/fltwrite/lib/common                                                                                    |          1 |         71 |          0 |          8 |         79 |
+| fontend/fltwrite/lib/pages                                                                                     |         10 |        429 |          6 |         42 |        477 |
+| fontend/fltwrite/lib/pages/edit                                                                                |          1 |        158 |          2 |         13 |        173 |
+| fontend/fltwrite/lib/pages/intro                                                                               |          1 |         26 |          0 |          4 |         30 |
+| fontend/fltwrite/lib/pages/personal                                                                            |          7 |        245 |          4 |         24 |        273 |
+| fontend/fltwrite/lib/pages/personal/components                                                                 |          3 |        101 |          0 |          5 |        106 |
+| fontend/fltwrite/lib/pages/personal/subpages                                                                   |          3 |         97 |          3 |         15 |        115 |
+| fontend/fltwrite/lib/pages/render                                                                              |          1 |          0 |          0 |          1 |          1 |
+| fontend/fltwrite/lib/route                                                                                     |          1 |         18 |          0 |          4 |         22 |
+| fontend/fltwrite/lib/store                                                                                     |          3 |         47 |          5 |         15 |         67 |
+| fontend/fltwrite/test                                                                                          |          1 |          8 |         16 |          6 |         30 |
+| fontend/fltwrite/web                                                                                           |          2 |         49 |         15 |          6 |         70 |
++----------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                                       | language   | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| /Users/chris/Desktop/SuperWrite/README.md                                                                      | Markdown   |          2 |          0 |          1 |          3 |
+| /Users/chris/Desktop/SuperWrite/backend/src/main.py                                                            | Python     |         59 |         16 |         17 |         92 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/README.md                                                     | Markdown   |         10 |          0 |          7 |         17 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/android/app/build.gradle                                      | Groovy     |         46 |          3 |         11 |         60 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/android/app/src/debug/AndroidManifest.xml                     | XML        |          4 |          3 |          1 |          8 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/android/app/src/main/AndroidManifest.xml                      | XML        |         30 |         11 |          1 |         42 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/android/app/src/main/res/drawable-v21/launch_background.xml   | XML        |          4 |          7 |          2 |         13 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/android/app/src/main/res/drawable/launch_background.xml       | XML        |          4 |          7 |          2 |         13 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/android/app/src/main/res/values-night/styles.xml              | XML        |          9 |          9 |          1 |         19 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/android/app/src/main/res/values/styles.xml                    | XML        |          9 |          9 |          1 |         19 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/android/app/src/profile/AndroidManifest.xml                   | XML        |          4 |          3 |          1 |          8 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/android/build.gradle                                          | Groovy     |         27 |          0 |          5 |         32 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/android/gradle.properties                                     | Properties |          3 |          0 |          1 |          4 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/android/gradle/wrapper/gradle-wrapper.properties              | Properties |          5 |          1 |          1 |          7 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/android/settings.gradle                                       | Groovy     |          8 |          0 |          4 |         12 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/ios/Runner/AppDelegate.swift                                  | Swift      |         12 |          0 |          2 |         14 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json   | JSON       |        122 |          0 |          1 |        123 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/ios/Runner/Assets.xcassets/LaunchImage.imageset/Contents.json | JSON       |         23 |          0 |          1 |         24 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md     | Markdown   |          3 |          0 |          2 |          5 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/ios/Runner/Base.lproj/LaunchScreen.storyboard                 | XML        |         36 |          1 |          1 |         38 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/ios/Runner/Base.lproj/Main.storyboard                         | XML        |         25 |          1 |          1 |         27 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/ios/Runner/Runner-Bridging-Header.h                           | C++        |          1 |          0 |          1 |          2 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/lib/common/wpage.dart                                         | Dart       |         71 |          0 |          8 |         79 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/lib/main.dart                                                 | Dart       |         32 |          0 |          3 |         35 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/lib/main.reflectable.dart                                     | Dart       |          0 |          1 |          0 |          1 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/lib/pages/edit/index.dart                                     | Dart       |        158 |          2 |         13 |        173 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/lib/pages/intro/index.dart                                    | Dart       |         26 |          0 |          4 |         30 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/lib/pages/personal/components/profile_card.dart               | Dart       |         64 |          0 |          2 |         66 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/lib/pages/personal/components/profile_item.dart               | Dart       |         37 |          0 |          2 |         39 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/lib/pages/personal/components/textfield_change.dart           | Dart       |          0 |          0 |          1 |          1 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/lib/pages/personal/index.dart                                 | Dart       |         47 |          1 |          4 |         52 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/lib/pages/personal/subpages/base_item_change.dart             | Dart       |         28 |          1 |          5 |         34 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/lib/pages/personal/subpages/change_profile.dart               | Dart       |         41 |          1 |          5 |         47 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/lib/pages/personal/subpages/identify_change.dart              | Dart       |         28 |          1 |          5 |         34 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/lib/pages/render/index.dart                                   | Dart       |          0 |          0 |          1 |          1 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/lib/route/index.dart                                          | Dart       |         18 |          0 |          4 |         22 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/lib/store/file.dart                                           | Dart       |         11 |          0 |          3 |         14 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/lib/store/file.g.dart                                         | Dart       |         32 |          5 |         10 |         47 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/lib/store/index.dart                                          | Dart       |          4 |          0 |          2 |          6 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/pubspec.yaml                                                  | YAML       |         26 |         12 |          8 |         46 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/test/widget_test.dart                                         | Dart       |          8 |         16 |          6 |         30 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/web/index.html                                                | HTML       |         26 |         15 |          5 |         46 |
+| /Users/chris/Desktop/SuperWrite/fontend/fltwrite/web/manifest.json                                             | JSON       |         23 |          0 |          1 |         24 |
+| Total                                                                                                          |            |      1,126 |        126 |        157 |      1,409 |
++----------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
