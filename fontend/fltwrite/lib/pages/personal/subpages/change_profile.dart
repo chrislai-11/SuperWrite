@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:fltwrite/common/wpage.dart';
 import 'package:fltwrite/pages/personal/components/profile_item.dart';
+import 'package:fltwrite/pages/personal/components/textfield_change.dart';
+import 'package:fltwrite/store/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -12,10 +14,22 @@ class ChangeProfile extends WPage {
 class _ChangeProfileState extends WPageState {
   final String barTitle = "个人简介";
   final bool hasBottomBar = false;
+  final TextEditingController nicknameController = TextEditingController();
+  final TextEditingController schoolController = TextEditingController();
+  final TextEditingController majorContoller = TextEditingController();
+  final FocusNode nicknameFocus = FocusNode();
+  final FocusNode schoolFocus = FocusNode();
+  final FocusNode majorFocus = FocusNode();
+
+  ProfileStore profileStore = ProfileStore();
 
   @override
   void initState() {
     super.initState();
+    profileStore = this.$store('profile');
+    nicknameController.value = TextEditingValue(text: profileStore.nickname);
+    schoolController.value = TextEditingValue(text: profileStore.school);
+    majorContoller.value = TextEditingValue(text: profileStore.major);
   }
 
   @override
@@ -30,14 +44,42 @@ class _ChangeProfileState extends WPageState {
         padding: EdgeInsets.fromLTRB(50.w, 80.h, 50.w, 50.h),
         child: Column(
           children: [
-            ProfileItem(
+            Center(
+              child: TextButton(
+                child: CircleAvatar(
+                  radius: 80.w,
+                  backgroundImage: AssetImage(profileStore.avatuar),
+                ),
+                onPressed: () {},
+              ),
+            ),
+            TextFieldChange(
               label: "昵称",
-              border:
-                  Border(top: BorderSide(color: Colors.grey[200], width: 2.h)),
-              onTap: () {
-                Navigator.pushNamed(context, '/identifyChange');
+              txcontroller: nicknameController,
+              focus: nicknameFocus,
+              minLength: 20,
+              onChange: (v) {
+                profileStore.setNickname(v);
               },
             ),
+            TextFieldChange(
+              label: "学校",
+              txcontroller: schoolController,
+              focus: schoolFocus,
+              minLength: 20,
+              onChange: (v) {
+                profileStore.setSchool(v);
+              },
+            ),
+            TextFieldChange(
+              label: "专业",
+              txcontroller: majorContoller,
+              focus: majorFocus,
+              minLength: 20,
+              onChange: (v) {
+                profileStore.setSchool(v);
+              },
+            )
           ],
         ),
       ),

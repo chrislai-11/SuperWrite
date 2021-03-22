@@ -10,7 +10,7 @@ class BaseItemChange extends WPage {
 }
 
 class _BaseItemChangeState extends WPageState {
-  final String barTitle = "基础项";
+  final String barTitle = "报告基本信息";
   final bool hasBottomBar = false;
 
   @override

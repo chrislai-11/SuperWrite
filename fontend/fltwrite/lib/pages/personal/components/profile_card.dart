@@ -1,9 +1,24 @@
+import 'package:fltwrite/store/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProfileCard extends StatelessWidget {
   final Function onTap;
-  ProfileCard({Key key, this.onTap}) : super(key: key);
+  final String avatuar;
+  final String nickname;
+  final String school;
+
+  final ProfileStore profileStore = ProfileStore();
+
+  ProfileCard(
+      {Key key,
+      @required this.avatuar,
+      @required this.nickname,
+      @required this.school,
+      this.onTap})
+      : super(key: key);
+
   Widget build(BuildContext context) {
     return TextButton(
       style: ButtonStyle(
@@ -31,25 +46,27 @@ class ProfileCard extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(right: 60.w),
                   child: CircleAvatar(
-                      radius: 80.w,
-                      backgroundImage: AssetImage('assets/image/dinasaur.jpg')),
+                    radius: 80.w,
+                    backgroundImage: AssetImage(avatuar),
+                  ),
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "小可爱",
+                      nickname,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 40.h,
                           color: Colors.black),
                     ),
                     Text(
-                      "暨南大学",
+                      school,
                       style: TextStyle(color: Colors.black87),
                     )
                   ],
-                )
+                ),
               ],
             )),
             Icon(

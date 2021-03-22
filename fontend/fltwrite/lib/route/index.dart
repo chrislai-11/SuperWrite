@@ -7,10 +7,6 @@ import 'package:fltwrite/pages/personal/subpages/identify_change.dart';
 
 import 'package:flutter/material.dart';
 
-class WRoute {
-  static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-}
-
 Map<String, WidgetBuilder> wroutes = {
   '/': (BuildContext context) => IntroPage(),
   '/editPage': (BuildContext context) => EditPage(),
