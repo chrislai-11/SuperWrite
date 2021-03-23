@@ -24,6 +24,21 @@ mixin _$FileStore on _FileStore, Store {
     });
   }
 
+  final _$baseItemMapAtom = Atom(name: '_FileStore.baseItemMap');
+
+  @override
+  ObservableMap<dynamic, dynamic> get baseItemMap {
+    _$baseItemMapAtom.reportRead();
+    return super.baseItemMap;
+  }
+
+  @override
+  set baseItemMap(ObservableMap<dynamic, dynamic> value) {
+    _$baseItemMapAtom.reportWrite(value, super.baseItemMap, () {
+      super.baseItemMap = value;
+    });
+  }
+
   final _$identifyItemListAtom = Atom(name: '_FileStore.identifyItemList');
 
   @override
@@ -57,22 +72,33 @@ mixin _$FileStore on _FileStore, Store {
   final _$_FileStoreActionController = ActionController(name: '_FileStore');
 
   @override
-  void addBaseItem(dynamic _item) {
+  void addBaseItem(List<FileItem> items) {
     final _$actionInfo = _$_FileStoreActionController.startAction(
         name: '_FileStore.addBaseItem');
     try {
-      return super.addBaseItem(_item);
+      return super.addBaseItem(items);
     } finally {
       _$_FileStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void addIdentifyItem(dynamic _item) {
+  void reflectBaseMap(List<FileItem> items) {
+    final _$actionInfo = _$_FileStoreActionController.startAction(
+        name: '_FileStore.reflectBaseMap');
+    try {
+      return super.reflectBaseMap(items);
+    } finally {
+      _$_FileStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void addIdentifyItem(List<String> items) {
     final _$actionInfo = _$_FileStoreActionController.startAction(
         name: '_FileStore.addIdentifyItem');
     try {
-      return super.addIdentifyItem(_item);
+      return super.addIdentifyItem(items);
     } finally {
       _$_FileStoreActionController.endAction(_$actionInfo);
     }
@@ -93,6 +119,7 @@ mixin _$FileStore on _FileStore, Store {
   String toString() {
     return '''
 baseItemList: ${baseItemList},
+baseItemMap: ${baseItemMap},
 identifyItemList: ${identifyItemList},
 show: ${show}
     ''';

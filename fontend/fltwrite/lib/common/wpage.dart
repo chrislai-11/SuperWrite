@@ -55,7 +55,8 @@ class WPageState extends State<WPage> {
       //设置文字大小不随系统设置改变
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
       child: Scaffold(
-        floatingActionButton: floating ? this.buildBody(context) : null,
+        floatingActionButton: floating ? this.buildFloating(context) : null,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         // 键盘上弹不overflow
         resizeToAvoidBottomInset: false,
         appBar: hasAppBar

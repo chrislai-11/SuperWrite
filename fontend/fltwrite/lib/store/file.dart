@@ -1,27 +1,39 @@
 import 'package:mobx/mobx.dart';
 part 'file.g.dart';
 
-class DefineItem {
+class FileStore = _FileStore with _$FileStore;
+
+class FileItem {
   String key;
   String value;
-
-  DefineItem(this.key, this.value);
+  FileItem(this.key, this.value);
 }
-
-class FileStore = _FileStore with _$FileStore;
 
 abstract class _FileStore with Store {
   @observable
-  DefineItem baseItemList;
+  ObservableList baseItemList = ObservableList();
   @action
-  void addBaseItem(key, value) {}
+  void addBaseItem(List<FileItem> items) {
+    items.forEach((element) {
+      baseItemList.add(element);
+    });
+  }
+
+  @observable
+  ObservableMap baseItemMap = ObservableMap();
+  @action
+  void reflectBaseMap(List<FileItem> items) {
+    items.forEach((element) {
+      baseItemMap[element.key] = element.value;
+    });
+  }
 
   @observable
   ObservableList identifyItemList = ObservableList();
   @action
-  void addIdentifyItem(List _items) {
-    _items.forEach((element) {
-      baseItemList.add(element);
+  void addIdentifyItem(List<String> items) {
+    items.forEach((element) {
+      identifyItemList.add(element);
     });
   }
 

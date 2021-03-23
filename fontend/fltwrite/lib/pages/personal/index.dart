@@ -22,9 +22,6 @@ class _PersonalPageState extends WPageState {
   void initState() {
     super.initState();
     profileStore = this.$store('profile');
-    print(
-        "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-    print(profileStore.nickname + ' ' + profileStore.school);
   }
 
   @override

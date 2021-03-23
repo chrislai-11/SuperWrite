@@ -4,6 +4,7 @@ import 'package:fltwrite/pages/personal/index.dart';
 import 'package:fltwrite/pages/personal/subpages/base_item_change.dart';
 import 'package:fltwrite/pages/personal/subpages/change_profile.dart';
 import 'package:fltwrite/pages/personal/subpages/identify_change.dart';
+import 'package:fltwrite/pages/take_photo/index.dart';
 
 import 'package:flutter/material.dart';
 
@@ -13,5 +14,6 @@ Map<String, WidgetBuilder> wroutes = {
   '/personal': (BuildContext context) => PersonalPage(),
   '/changeProfile': (BuildContext context) => ChangeProfile(),
   '/baseItemChange': (BuildContext context) => BaseItemChange(),
-  '/identifyChange': (BuildContext context) => IdentifyChange()
+  '/identifyChange': (BuildContext context) => IdentifyChange(),
+  '/takePhoto': (BuildContext context) => ImagePickerWidget(),
 };

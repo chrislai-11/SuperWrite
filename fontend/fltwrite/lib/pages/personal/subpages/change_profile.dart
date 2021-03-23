@@ -50,7 +50,9 @@ class _ChangeProfileState extends WPageState {
                   radius: 80.w,
                   backgroundImage: AssetImage(profileStore.avatuar),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/takePhoto');
+                },
               ),
             ),
             TextFieldChange(
