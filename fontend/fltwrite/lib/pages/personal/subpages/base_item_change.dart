@@ -1,6 +1,4 @@
-import 'package:dio/dio.dart';
 import 'package:fltwrite/common/wpage.dart';
-import 'package:fltwrite/pages/personal/components/profile_item.dart';
 import 'package:fltwrite/store/file.dart';
 import 'package:fltwrite/store/profile.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +37,9 @@ class _BaseItemChangeState extends WPageState {
   @override
   Widget buildFloating(BuildContext context) {
     return FloatingActionButton(
-        onPressed: () => print("FloatingActionButton"),
+        onPressed: () {
+          print("FloatingActionButton");
+        },
         child: IconButton(icon: Icon(Icons.add), onPressed: () {}),
         tooltip: "按这么长时间干嘛",
         foregroundColor: Colors.white,

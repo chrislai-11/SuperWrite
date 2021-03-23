@@ -1,6 +1,4 @@
-import 'package:dio/dio.dart';
 import 'package:fltwrite/common/wpage.dart';
-import 'package:fltwrite/pages/personal/components/profile_item.dart';
 import 'package:fltwrite/pages/personal/components/textfield_change.dart';
 import 'package:fltwrite/store/profile.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +15,11 @@ class _ChangeProfileState extends WPageState {
   final TextEditingController nicknameController = TextEditingController();
   final TextEditingController schoolController = TextEditingController();
   final TextEditingController majorContoller = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
   final FocusNode nicknameFocus = FocusNode();
   final FocusNode schoolFocus = FocusNode();
   final FocusNode majorFocus = FocusNode();
+  final FocusNode phoneFocus = FocusNode();
 
   ProfileStore profileStore = ProfileStore();
 
@@ -30,6 +30,7 @@ class _ChangeProfileState extends WPageState {
     nicknameController.value = TextEditingValue(text: profileStore.nickname);
     schoolController.value = TextEditingValue(text: profileStore.school);
     majorContoller.value = TextEditingValue(text: profileStore.major);
+    phoneController.value = TextEditingValue(text: profileStore.telephone);
   }
 
   @override
@@ -41,7 +42,7 @@ class _ChangeProfileState extends WPageState {
         FocusScope.of(context).requestFocus(FocusNode());
       },
       child: Container(
-        padding: EdgeInsets.fromLTRB(50.w, 80.h, 50.w, 50.h),
+        padding: EdgeInsets.fromLTRB(50.w, 50.h, 50.w, 50.h),
         child: Column(
           children: [
             Center(
@@ -81,7 +82,13 @@ class _ChangeProfileState extends WPageState {
               onChange: (v) {
                 profileStore.setSchool(v);
               },
-            )
+            ),
+            TextFieldChange(
+              label: "手机号",
+              txcontroller: phoneController,
+              focus: phoneFocus,
+              readOnly: true,
+            ),
           ],
         ),
       ),

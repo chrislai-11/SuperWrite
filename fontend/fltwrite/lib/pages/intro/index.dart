@@ -1,6 +1,4 @@
-import 'package:dio/dio.dart';
 import 'package:fltwrite/common/wpage.dart';
-import 'package:fltwrite/route/index.dart';
 import 'package:flutter/material.dart';
 
 class IntroPage extends WPage {

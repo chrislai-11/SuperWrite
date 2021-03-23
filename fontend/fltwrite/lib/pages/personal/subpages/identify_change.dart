@@ -1,6 +1,4 @@
-import 'package:dio/dio.dart';
 import 'package:fltwrite/common/wpage.dart';
-import 'package:fltwrite/pages/personal/components/profile_item.dart';
 import 'package:fltwrite/store/file.dart';
 import 'package:fltwrite/store/profile.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +12,7 @@ class IdentifyChange extends WPage {
 class _IdentifyChangeState extends WPageState {
   final String barTitle = "内容识别项";
   final bool hasBottomBar = false;
+  final bool floating = true;
   ProfileStore profileStore = ProfileStore();
   FileStore fileStore = FileStore();
 
@@ -25,7 +24,7 @@ class _IdentifyChangeState extends WPageState {
   }
 
   _onReorder(int oldIndex, int newIndex) {
-    print('oldIndex: $oldIndex , newIndex: $newIndex');
+    // print('oldIndex: $oldIndex , newIndex: $newIndex');
     setState(() {
       if (newIndex == fileStore.identifyItemList.length) {
         newIndex = fileStore.identifyItemList.length - 1;
@@ -33,6 +32,24 @@ class _IdentifyChangeState extends WPageState {
       var item = fileStore.identifyItemList.removeAt(oldIndex);
       fileStore.identifyItemList.insert(newIndex, item);
     });
+  }
+
+  @override
+  Widget buildFloating(BuildContext context) {
+    return FloatingActionButton(
+        onPressed: () {
+          print("FloatingActionButton");
+        },
+        child: IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {
+              print("FloatingActionButton");
+            }),
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.blue,
+        // elevation: 6.0,
+        // highlightElevation: 12.0,
+        shape: CircleBorder());
   }
 
   @override

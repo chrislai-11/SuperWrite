@@ -1,10 +1,8 @@
-import 'package:dio/dio.dart';
 import 'package:fltwrite/common/wpage.dart';
 import 'package:fltwrite/pages/personal/components/profile_card.dart';
 import 'package:fltwrite/pages/personal/components/profile_item.dart';
 import 'package:fltwrite/store/profile.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PersonalPage extends WPage {

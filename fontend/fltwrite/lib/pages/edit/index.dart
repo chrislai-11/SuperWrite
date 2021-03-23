@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:fltwrite/common/wpage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EditPage extends WPage {
   @override
@@ -12,24 +13,22 @@ class EditPage extends WPage {
 class _EditPageState extends WPageState {
   final String barTitle = "编辑";
   final int currIndex = 1;
+
   String _fileName;
   List<PlatformFile> _paths;
   String _directoryPath;
   String _extension = 'docx';
-  bool _loadingPath = false;
+  // bool _loadingPath = false;
   bool _multiPick = true;
   FileType _pickingType = FileType.custom;
-  TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-
-    _controller.addListener(() => _extension = _controller.text);
   }
 
-  void _openFileExplorer() async {
-    setState(() => _loadingPath = true);
+  Future<void> _openFileExplorer() async {
+    // setState(() => _loadingPath = true);
     try {
       _directoryPath = null;
       _paths = (await FilePicker.platform.pickFiles(
@@ -47,25 +46,25 @@ class _EditPageState extends WPageState {
     }
     if (!mounted) return;
     setState(() {
-      _loadingPath = false;
+      // _loadingPath = false;
       _fileName = _paths != null ? _paths.map((e) => e.name).toString() : '...';
     });
   }
 
-  void _clearCachedFiles() {
-    FilePicker.platform.clearTemporaryFiles().then((result) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: result ? Colors.green : Colors.red,
-          content: Text((result
-              ? 'Temporary files removed with success.'
-              : 'Failed to clean temporary files')),
-        ),
-      );
-    });
-  }
+  // void _clearCachedFiles() {
+  //   FilePicker.platform.clearTemporaryFiles().then((result) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         backgroundColor: result ? Colors.green : Colors.red,
+  //         content: Text((result
+  //             ? 'Temporary files removed with success.'
+  //             : 'Failed to clean temporary files')),
+  //       ),
+  //     );
+  //   });
+  // }
 
-  void postRequestFunction2() async {
+  Future<void> postRequestFunction2() async {
     String url = "http://127.0.0.1:5000/uploadDocx/";
 
     ///创建Dio
@@ -92,81 +91,123 @@ class _EditPageState extends WPageState {
   @override
   Widget buildBody(BuildContext context) {
     return Center(
-        child: Padding(
-      padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 50.0, bottom: 20.0),
-              child: Column(
-                children: <Widget>[
-                  ElevatedButton(
-                    onPressed: () async {
-                      await _openFileExplorer();
-                      await postRequestFunction2();
-                    },
-                    child: const Text("Open file picker"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => _clearCachedFiles(),
-                    child: const Text("Clear temporary files"),
-                  ),
-                ],
-              ),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            margin: EdgeInsets.only(bottom: 50.h),
+            child: ElevatedButton(
+              style: ButtonStyle(
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0))),
+                  textStyle:
+                      MaterialStateProperty.all(TextStyle(fontSize: 35.h)),
+                  padding: MaterialStateProperty.all(
+                      EdgeInsets.fromLTRB(60.w, 30.w, 60.w, 30.w)),
+                  elevation: MaterialStateProperty.all(10.r),
+                  shadowColor: MaterialStateProperty.all(Colors.grey)),
+              onPressed: () async {
+                await _openFileExplorer();
+                await postRequestFunction2();
+              },
+              child: Text("打开文件"),
             ),
-            Builder(
-              builder: (BuildContext context) => _loadingPath
-                  ? Padding(
-                      padding: const EdgeInsets.only(bottom: 10.0),
-                      child: const CircularProgressIndicator(),
-                    )
-                  : _directoryPath != null
-                      ? ListTile(
-                          title: const Text('Directory path'),
-                          subtitle: Text(_directoryPath),
-                        )
-                      : _paths != null
-                          ? Container(
-                              padding: const EdgeInsets.only(bottom: 30.0),
-                              height: MediaQuery.of(context).size.height * 0.50,
-                              child: Scrollbar(
-                                  child: ListView.separated(
-                                itemCount: _paths != null && _paths.isNotEmpty
-                                    ? _paths.length
-                                    : 1,
-                                itemBuilder: (BuildContext context, int index) {
-                                  final bool isMultiPath =
-                                      _paths != null && _paths.isNotEmpty;
-                                  final String name = 'File $index: ' +
-                                      (isMultiPath
-                                          ? _paths
-                                              .map((e) => e.name)
-                                              .toList()[index]
-                                          : _fileName ?? '...');
-                                  final path = _paths
-                                      .map((e) => e.path)
-                                      .toList()[index]
-                                      .toString();
-
-                                  return ListTile(
-                                    title: Text(
-                                      name,
-                                    ),
-                                    subtitle: Text(path),
-                                  );
-                                },
-                                separatorBuilder:
-                                    (BuildContext context, int index) =>
-                                        const Divider(),
-                              )),
-                            )
-                          : const SizedBox(),
-            ),
-          ],
-        ),
+          ),
+          ElevatedButton(
+            style: ButtonStyle(
+                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0))),
+                textStyle: MaterialStateProperty.all(TextStyle(fontSize: 35.h)),
+                padding: MaterialStateProperty.all(
+                    EdgeInsets.fromLTRB(60.w, 30.w, 60.w, 30.w)),
+                elevation: MaterialStateProperty.all(10.r),
+                shadowColor: MaterialStateProperty.all(Colors.grey)),
+            onPressed: () async {
+              await _openFileExplorer();
+              await postRequestFunction2();
+            },
+            child: Text("继续编辑"),
+          ),
+        ],
       ),
-    ));
+    );
   }
 }
+// return Center(
+//     child: Padding(
+//   padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+//   child: SingleChildScrollView(
+//     child: Column(
+//       mainAxisAlignment: MainAxisAlignment.center,
+//       children: <Widget>[
+//         Padding(
+//           padding: const EdgeInsets.only(top: 50.0, bottom: 20.0),
+//           child: Column(
+//             children: <Widget>[
+//               ElevatedButton(
+//                 onPressed: () async {
+//                   await _openFileExplorer();
+//                   await postRequestFunction2();
+//                 },
+//                 child: Text("打开文件"),
+//               ),
+//               ElevatedButton(
+//                 onPressed: () => _clearCachedFiles(),
+//                 child: const Text("Clear temporary files"),
+//               ),
+//             ],
+//           ),
+//         ),
+//         Builder(
+//           builder: (BuildContext context) => _loadingPath
+//               ? Padding(
+//                   padding: const EdgeInsets.only(bottom: 10.0),
+//                   child: const CircularProgressIndicator(),
+//                 )
+//               : _directoryPath != null
+//                   ? ListTile(
+//                       title: const Text('Directory path'),
+//                       subtitle: Text(_directoryPath),
+//                     )
+//                   : _paths != null
+//                       ? Container(
+//                           padding: const EdgeInsets.only(bottom: 30.0),
+//                           height: MediaQuery.of(context).size.height * 0.50,
+//                           child: Scrollbar(
+//                               child: ListView.separated(
+//                             itemCount: _paths != null && _paths.isNotEmpty
+//                                 ? _paths.length
+//                                 : 1,
+//                             itemBuilder: (BuildContext context, int index) {
+//                               final bool isMultiPath =
+//                                   _paths != null && _paths.isNotEmpty;
+//                               final String name = 'File $index: ' +
+//                                   (isMultiPath
+//                                       ? _paths
+//                                           .map((e) => e.name)
+//                                           .toList()[index]
+//                                       : _fileName ?? '...');
+//                               final path = _paths
+//                                   .map((e) => e.path)
+//                                   .toList()[index]
+//                                   .toString();
+
+//                               return ListTile(
+//                                 title: Text(
+//                                   name,
+//                                 ),
+//                                 subtitle: Text(path),
+//                               );
+//                             },
+//                             separatorBuilder:
+//                                 (BuildContext context, int index) =>
+//                                     const Divider(),
+//                           )),
+//                         )
+//                       : const SizedBox(),
+//         ),
+//       ],
+//     ),
+//   ),
+// ));

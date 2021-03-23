@@ -12,12 +12,14 @@ class TextFieldChange extends StatelessWidget {
   final TextEditingController txcontroller;
   final FocusNode focus;
   final String name;
+  final bool readOnly;
 
   final ProfileStore profileStore = ProfileStore();
 
   TextFieldChange(
       {Key key,
       @required this.label,
+      this.readOnly = false,
       this.onChange,
       this.onTap,
       this.border,
@@ -41,6 +43,7 @@ class TextFieldChange extends StatelessWidget {
                 color: Colors.black),
           ),
           TextField(
+            readOnly: readOnly,
             controller: txcontroller,
             focusNode: focus,
             autofocus: false,
