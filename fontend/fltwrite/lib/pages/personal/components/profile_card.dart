@@ -46,6 +46,7 @@ class ProfileCard extends StatelessWidget {
                   margin: EdgeInsets.only(right: 60.w),
                   child: CircleAvatar(
                     radius: 80.w,
+                    // imagePath 按需修改
                     backgroundImage: AssetImage(avatuar),
                   ),
                 ),

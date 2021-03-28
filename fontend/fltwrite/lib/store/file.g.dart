@@ -24,18 +24,18 @@ mixin _$FileStore on _FileStore, Store {
     });
   }
 
-  final _$baseItemMapAtom = Atom(name: '_FileStore.baseItemMap');
+  final _$baseItemKeysAtom = Atom(name: '_FileStore.baseItemKeys');
 
   @override
-  ObservableMap<dynamic, dynamic> get baseItemMap {
-    _$baseItemMapAtom.reportRead();
-    return super.baseItemMap;
+  ObservableList<dynamic> get baseItemKeys {
+    _$baseItemKeysAtom.reportRead();
+    return super.baseItemKeys;
   }
 
   @override
-  set baseItemMap(ObservableMap<dynamic, dynamic> value) {
-    _$baseItemMapAtom.reportWrite(value, super.baseItemMap, () {
-      super.baseItemMap = value;
+  set baseItemKeys(ObservableList<dynamic> value) {
+    _$baseItemKeysAtom.reportWrite(value, super.baseItemKeys, () {
+      super.baseItemKeys = value;
     });
   }
 
@@ -57,15 +57,30 @@ mixin _$FileStore on _FileStore, Store {
   final _$showAtom = Atom(name: '_FileStore.show');
 
   @override
-  List<dynamic> get show {
+  Map<String, dynamic> get show {
     _$showAtom.reportRead();
     return super.show;
   }
 
   @override
-  set show(List<dynamic> value) {
+  set show(Map<String, dynamic> value) {
     _$showAtom.reportWrite(value, super.show, () {
       super.show = value;
+    });
+  }
+
+  final _$editWidgetsAtom = Atom(name: '_FileStore.editWidgets');
+
+  @override
+  List<EditWidget> get editWidgets {
+    _$editWidgetsAtom.reportRead();
+    return super.editWidgets;
+  }
+
+  @override
+  set editWidgets(List<EditWidget> value) {
+    _$editWidgetsAtom.reportWrite(value, super.editWidgets, () {
+      super.editWidgets = value;
     });
   }
 
@@ -83,11 +98,33 @@ mixin _$FileStore on _FileStore, Store {
   }
 
   @override
-  void reflectBaseMap(List<FileItem> items) {
+  void reorderBase(int oldIndex, int newIndex) {
     final _$actionInfo = _$_FileStoreActionController.startAction(
-        name: '_FileStore.reflectBaseMap');
+        name: '_FileStore.reorderBase');
     try {
-      return super.reflectBaseMap(items);
+      return super.reorderBase(oldIndex, newIndex);
+    } finally {
+      _$_FileStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void changeBaseKeyByIndex(int index, String _key) {
+    final _$actionInfo = _$_FileStoreActionController.startAction(
+        name: '_FileStore.changeBaseKeyByIndex');
+    try {
+      return super.changeBaseKeyByIndex(index, _key);
+    } finally {
+      _$_FileStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void changeBaseValueByIndex(int index, String _value) {
+    final _$actionInfo = _$_FileStoreActionController.startAction(
+        name: '_FileStore.changeBaseValueByIndex');
+    try {
+      return super.changeBaseValueByIndex(index, _value);
     } finally {
       _$_FileStoreActionController.endAction(_$actionInfo);
     }
@@ -105,11 +142,66 @@ mixin _$FileStore on _FileStore, Store {
   }
 
   @override
-  void addShowDoc(List<dynamic> _doc) {
-    final _$actionInfo =
-        _$_FileStoreActionController.startAction(name: '_FileStore.addShowDoc');
+  void reorderIdentify(int oldIndex, int newIndex) {
+    final _$actionInfo = _$_FileStoreActionController.startAction(
+        name: '_FileStore.reorderIdentify');
     try {
-      return super.addShowDoc(_doc);
+      return super.reorderIdentify(oldIndex, newIndex);
+    } finally {
+      _$_FileStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void changeIdentifyByIndex(int index, String _value) {
+    final _$actionInfo = _$_FileStoreActionController.startAction(
+        name: '_FileStore.changeIdentifyByIndex');
+    try {
+      return super.changeIdentifyByIndex(index, _value);
+    } finally {
+      _$_FileStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void addToShow(dynamic _map) {
+    final _$actionInfo =
+        _$_FileStoreActionController.startAction(name: '_FileStore.addToShow');
+    try {
+      return super.addToShow(_map);
+    } finally {
+      _$_FileStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void clearEditWidgets() {
+    final _$actionInfo = _$_FileStoreActionController.startAction(
+        name: '_FileStore.clearEditWidgets');
+    try {
+      return super.clearEditWidgets();
+    } finally {
+      _$_FileStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void addEditWidget(EditWidget _widget) {
+    final _$actionInfo = _$_FileStoreActionController.startAction(
+        name: '_FileStore.addEditWidget');
+    try {
+      return super.addEditWidget(_widget);
+    } finally {
+      _$_FileStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void insertEditWidget(int index, EditWidget _widget) {
+    final _$actionInfo = _$_FileStoreActionController.startAction(
+        name: '_FileStore.insertEditWidget');
+    try {
+      return super.insertEditWidget(index, _widget);
     } finally {
       _$_FileStoreActionController.endAction(_$actionInfo);
     }
@@ -119,9 +211,10 @@ mixin _$FileStore on _FileStore, Store {
   String toString() {
     return '''
 baseItemList: ${baseItemList},
-baseItemMap: ${baseItemMap},
+baseItemKeys: ${baseItemKeys},
 identifyItemList: ${identifyItemList},
-show: ${show}
+show: ${show},
+editWidgets: ${editWidgets}
     ''';
   }
 }

@@ -20,7 +20,7 @@ class _ImagePickerState extends State<ImagePickerWidget> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              _ImageView(_imgPath),
+              imageView(_imgPath),
               TextButton(
                 onPressed: _takePhoto,
                 child: Text("拍照"),
@@ -35,7 +35,7 @@ class _ImagePickerState extends State<ImagePickerWidget> {
   }
 
   /*图片控件*/
-  Widget _ImageView(imgPath) {
+  Widget imageView(imgPath) {
     if (imgPath == null) {
       return Center(
         child: Text("请选择图片或拍照"),

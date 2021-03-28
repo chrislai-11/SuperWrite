@@ -9,6 +9,21 @@ part of 'profile.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ProfileStore on _ProfileStore, Store {
+  final _$tokenAtom = Atom(name: '_ProfileStore.token');
+
+  @override
+  String get token {
+    _$tokenAtom.reportRead();
+    return super.token;
+  }
+
+  @override
+  set token(String value) {
+    _$tokenAtom.reportWrite(value, super.token, () {
+      super.token = value;
+    });
+  }
+
   final _$nicknameAtom = Atom(name: '_ProfileStore.nickname');
 
   @override
@@ -88,6 +103,17 @@ mixin _$ProfileStore on _ProfileStore, Store {
       ActionController(name: '_ProfileStore');
 
   @override
+  void setToken(dynamic _token) {
+    final _$actionInfo = _$_ProfileStoreActionController.startAction(
+        name: '_ProfileStore.setToken');
+    try {
+      return super.setToken(_token);
+    } finally {
+      _$_ProfileStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setNickname(dynamic _name) {
     final _$actionInfo = _$_ProfileStoreActionController.startAction(
         name: '_ProfileStore.setNickname');
@@ -101,6 +127,7 @@ mixin _$ProfileStore on _ProfileStore, Store {
   @override
   String toString() {
     return '''
+token: ${token},
 nickname: ${nickname},
 school: ${school},
 avatuar: ${avatuar},

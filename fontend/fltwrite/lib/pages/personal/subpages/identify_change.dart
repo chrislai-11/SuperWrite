@@ -37,18 +37,14 @@ class _IdentifyChangeState extends WPageState {
   @override
   Widget buildFloating(BuildContext context) {
     return FloatingActionButton(
-        onPressed: () {
-          print("FloatingActionButton");
-        },
+        onPressed: () {},
         child: IconButton(
             icon: Icon(Icons.add),
             onPressed: () {
-              print("FloatingActionButton");
+              Navigator.pushNamed(context, '/addIdentifyItem');
             }),
         foregroundColor: Colors.white,
         backgroundColor: Colors.blue,
-        // elevation: 6.0,
-        // highlightElevation: 12.0,
         shape: CircleBorder());
   }
 
@@ -72,11 +68,69 @@ class _IdentifyChangeState extends WPageState {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(right: 30.w),
-                    child: Text(
-                      entry.value,
-                      style: TextStyle(fontSize: 35.h),
+                  Expanded(
+                    child: TextButton(
+                      style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all(Colors.black),
+                        padding:
+                            MaterialStateProperty.all(EdgeInsets.all(40.w)),
+                      ),
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              print(entry.key);
+                              return Dialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(30.r))),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(30.r)),
+                                        color: Colors.white),
+                                    padding: EdgeInsets.fromLTRB(
+                                        40.w, 60.h, 40.w, 60.h),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "设置项",
+                                          style: TextStyle(
+                                            fontSize: 35.h,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        TextField(
+                                          onChanged: (v) {
+                                            fileStore.changeIdentifyByIndex(
+                                                entry.key, v);
+                                            setState(() {});
+                                          },
+                                          style: TextStyle(fontSize: 35.h),
+                                          controller:
+                                              TextEditingController.fromValue(
+                                                  TextEditingValue(
+                                                      text: entry.value)),
+                                        ),
+                                      ],
+                                    ),
+                                  ));
+                            });
+                      },
+                      child: Row(
+                        children: [
+                          Container(
+                            child: Text(
+                              entry.value,
+                              style: TextStyle(fontSize: 35.h),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   TextButton(
@@ -110,7 +164,7 @@ class _IdentifyChangeState extends WPageState {
               ),
             );
           }).toList(),
-          onReorder: _onReorder,
+          onReorder: fileStore.reorderIdentify,
         );
       }),
     );

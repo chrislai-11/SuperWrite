@@ -5,14 +5,21 @@ class ProfileStore = _ProfileStore with _$ProfileStore;
 
 abstract class _ProfileStore with Store {
   @observable
-  String nickname = "小可爱";
+  String token = "";
+  @action
+  void setToken(_token) {
+    token = _token;
+  }
+
+  @observable
+  String nickname = "";
   @action
   void setNickname(_name) {
     nickname = _name;
   }
 
   @observable
-  String school = "暨南大学";
+  String school = "";
   void setSchool(_school) {
     school = _school;
   }

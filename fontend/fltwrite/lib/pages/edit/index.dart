@@ -1,8 +1,10 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:fltwrite/common/wpage.dart';
+import 'package:fltwrite/store/file.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EditPage extends WPage {
@@ -13,79 +15,63 @@ class EditPage extends WPage {
 class _EditPageState extends WPageState {
   final String barTitle = "编辑";
   final int currIndex = 1;
+  FileStore fileStore = FileStore();
 
-  String _fileName;
-  List<PlatformFile> _paths;
-  String _directoryPath;
-  String _extension = 'docx';
-  // bool _loadingPath = false;
-  bool _multiPick = true;
-  FileType _pickingType = FileType.custom;
+  FilePickerResult _paths;
+  List<File> files;
 
   @override
   void initState() {
     super.initState();
+    fileStore = this.$store('file');
   }
 
   Future<void> _openFileExplorer() async {
-    // setState(() => _loadingPath = true);
     try {
-      _directoryPath = null;
-      _paths = (await FilePicker.platform.pickFiles(
-        type: _pickingType,
-        allowMultiple: _multiPick,
-        allowedExtensions: (_extension?.isNotEmpty ?? false)
-            ? _extension?.replaceAll(' ', '')?.split(',')
-            : null,
-      ))
-          ?.files;
-    } on PlatformException catch (e) {
-      print("Unsupported operation" + e.toString());
+      _paths = await FilePicker.platform.pickFiles(
+          allowMultiple: true,
+          type: FileType.custom,
+          allowedExtensions: ['docx']);
     } catch (ex) {
       print(ex);
     }
-    if (!mounted) return;
     setState(() {
       // _loadingPath = false;
-      _fileName = _paths != null ? _paths.map((e) => e.name).toString() : '...';
+      files = _paths.paths.map((path) => File(path)).toList();
     });
   }
 
-  // void _clearCachedFiles() {
-  //   FilePicker.platform.clearTemporaryFiles().then((result) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(
-  //         backgroundColor: result ? Colors.green : Colors.red,
-  //         content: Text((result
-  //             ? 'Temporary files removed with success.'
-  //             : 'Failed to clean temporary files')),
-  //       ),
-  //     );
-  //   });
-  // }
+  //   FilePicker.platform.clearTemporaryFiles()
 
-  Future<void> postRequestFunction2() async {
+  Future<void> postRequestFunction() async {
     String url = "http://127.0.0.1:5000/uploadDocx/";
 
     ///创建Dio
     Dio dio = new Dio();
-    FormData formdata = FormData.fromMap({
-      "title0": "实验目的",
-      "title1": "实验内容",
-      "title2": "主要仪器设备",
-      "title3": "实验步骤",
-      "title4": "实验总结",
-      "files": [
-        await MultipartFile.fromFile(
-            _paths.map((e) => e.path).toList()[0].toString()),
-      ]
+    print(fileStore.identifyItemList);
+    Map<String, dynamic> postData = Map();
+
+    int i = 0;
+    fileStore.identifyItemList.forEach((element) {
+      // print(element);
+      postData['title' + i.toString()] = element;
+      i++;
     });
+    postData['files'] = [
+      await MultipartFile.fromFile(files[0].path.toString())
+    ];
+    print(postData);
+
+    FormData formdata = FormData.fromMap(postData);
 
     ///发起post请求
     Response response = await dio.post(url, data: formdata);
 
     var data = response.data;
-    print(data);
+    // print(data);
+    // print(data.runtimeType.toString());
+    fileStore.addToShow(Map<String, dynamic>.from(data));
+    Navigator.pushNamed(context, '/render');
   }
 
   @override
@@ -109,7 +95,8 @@ class _EditPageState extends WPageState {
                   shadowColor: MaterialStateProperty.all(Colors.grey)),
               onPressed: () async {
                 await _openFileExplorer();
-                await postRequestFunction2();
+                // print(files.toString());
+                await postRequestFunction();
               },
               child: Text("打开文件"),
             ),
@@ -123,91 +110,13 @@ class _EditPageState extends WPageState {
                     EdgeInsets.fromLTRB(60.w, 30.w, 60.w, 30.w)),
                 elevation: MaterialStateProperty.all(10.r),
                 shadowColor: MaterialStateProperty.all(Colors.grey)),
-            onPressed: () async {
-              await _openFileExplorer();
-              await postRequestFunction2();
-            },
+            onPressed: () async {},
             child: Text("继续编辑"),
           ),
+          Image.file(File(
+              '/Users/chris/Library/Developer/CoreSimulator/Devices/9FBE838E-D711-40E1-82A6-22A6545246CB/data/Containers/Data/Application/FC6A85E0-29A3-4995-9CD4-6B72900275C7/tmp/image_picker_2B953886-A4CA-4C06-81D4-D4BBF0834CB7-49466-000030688B1B895E.jpg'))
         ],
       ),
     );
   }
 }
-// return Center(
-//     child: Padding(
-//   padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-//   child: SingleChildScrollView(
-//     child: Column(
-//       mainAxisAlignment: MainAxisAlignment.center,
-//       children: <Widget>[
-//         Padding(
-//           padding: const EdgeInsets.only(top: 50.0, bottom: 20.0),
-//           child: Column(
-//             children: <Widget>[
-//               ElevatedButton(
-//                 onPressed: () async {
-//                   await _openFileExplorer();
-//                   await postRequestFunction2();
-//                 },
-//                 child: Text("打开文件"),
-//               ),
-//               ElevatedButton(
-//                 onPressed: () => _clearCachedFiles(),
-//                 child: const Text("Clear temporary files"),
-//               ),
-//             ],
-//           ),
-//         ),
-//         Builder(
-//           builder: (BuildContext context) => _loadingPath
-//               ? Padding(
-//                   padding: const EdgeInsets.only(bottom: 10.0),
-//                   child: const CircularProgressIndicator(),
-//                 )
-//               : _directoryPath != null
-//                   ? ListTile(
-//                       title: const Text('Directory path'),
-//                       subtitle: Text(_directoryPath),
-//                     )
-//                   : _paths != null
-//                       ? Container(
-//                           padding: const EdgeInsets.only(bottom: 30.0),
-//                           height: MediaQuery.of(context).size.height * 0.50,
-//                           child: Scrollbar(
-//                               child: ListView.separated(
-//                             itemCount: _paths != null && _paths.isNotEmpty
-//                                 ? _paths.length
-//                                 : 1,
-//                             itemBuilder: (BuildContext context, int index) {
-//                               final bool isMultiPath =
-//                                   _paths != null && _paths.isNotEmpty;
-//                               final String name = 'File $index: ' +
-//                                   (isMultiPath
-//                                       ? _paths
-//                                           .map((e) => e.name)
-//                                           .toList()[index]
-//                                       : _fileName ?? '...');
-//                               final path = _paths
-//                                   .map((e) => e.path)
-//                                   .toList()[index]
-//                                   .toString();
-
-//                               return ListTile(
-//                                 title: Text(
-//                                   name,
-//                                 ),
-//                                 subtitle: Text(path),
-//                               );
-//                             },
-//                             separatorBuilder:
-//                                 (BuildContext context, int index) =>
-//                                     const Divider(),
-//                           )),
-//                         )
-//                       : const SizedBox(),
-//         ),
-//       ],
-//     ),
-//   ),
-// ));

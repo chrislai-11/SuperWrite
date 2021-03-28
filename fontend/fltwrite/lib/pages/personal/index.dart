@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:fltwrite/common/wpage.dart';
 import 'package:fltwrite/pages/personal/components/profile_card.dart';
 import 'package:fltwrite/pages/personal/components/profile_item.dart';
@@ -52,6 +53,27 @@ class _PersonalPageState extends WPageState {
                 Border(top: BorderSide(color: Colors.grey[200], width: 2.h)),
             onTap: () {
               Navigator.pushNamed(context, '/identifyChange');
+            },
+          ),
+          ProfileItem(
+            label: "清理缓存",
+            border: Border(
+              top: BorderSide(color: Colors.grey[200], width: 2.h),
+              bottom: BorderSide(color: Colors.grey[200], width: 2.h),
+            ),
+            rightIcon: false,
+            onTap: () {
+              FilePicker.platform.clearTemporaryFiles().then((result) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    backgroundColor: result ? Colors.green : Colors.red,
+                    content: Text(
+                      result ? '清理缓存成功' : '清理缓存失败',
+                      style: TextStyle(fontSize: 30.h),
+                    ),
+                  ),
+                );
+              });
             },
           ),
         ],

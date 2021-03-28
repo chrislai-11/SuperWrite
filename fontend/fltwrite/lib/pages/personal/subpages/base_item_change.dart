@@ -23,24 +23,15 @@ class _BaseItemChangeState extends WPageState {
     fileStore = this.$store('file');
   }
 
-  _onReorder(int oldIndex, int newIndex) {
-    print('oldIndex: $oldIndex , newIndex: $newIndex');
-    setState(() {
-      if (newIndex == fileStore.baseItemList.length) {
-        newIndex = fileStore.baseItemList.length - 1;
-      }
-      var item = fileStore.baseItemList.removeAt(oldIndex);
-      fileStore.baseItemList.insert(newIndex, item);
-    });
-  }
-
   @override
   Widget buildFloating(BuildContext context) {
     return FloatingActionButton(
-        onPressed: () {
-          print("FloatingActionButton");
-        },
-        child: IconButton(icon: Icon(Icons.add), onPressed: () {}),
+        onPressed: () {},
+        child: IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {
+              Navigator.pushNamed(context, '/addBaseItem');
+            }),
         tooltip: "按这么长时间干嘛",
         foregroundColor: Colors.white,
         backgroundColor: Colors.blue,
@@ -69,20 +60,93 @@ class _BaseItemChangeState extends WPageState {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(right: 30.w),
-                          child: Text(
-                            entry.value.key,
-                            style: TextStyle(fontSize: 35.h),
-                          ),
+                    Expanded(
+                      child: TextButton(
+                        style: ButtonStyle(
+                          foregroundColor:
+                              MaterialStateProperty.all(Colors.black),
+                          padding:
+                              MaterialStateProperty.all(EdgeInsets.all(40.w)),
                         ),
-                        Text(
-                          entry.value.value,
-                          style: TextStyle(fontSize: 35.h),
-                        )
-                      ],
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                print(entry.key);
+                                return Dialog(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(30.r))),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(30.r)),
+                                          color: Colors.white),
+                                      padding: EdgeInsets.fromLTRB(
+                                          40.w, 60.h, 40.w, 60.h),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "设置项",
+                                            style: TextStyle(
+                                              fontSize: 30.h,
+                                            ),
+                                          ),
+                                          TextField(
+                                            readOnly: fileStore
+                                                    .baseItemList[entry.key]
+                                                    .key ==
+                                                '大标题',
+                                            onChanged: (v) {
+                                              fileStore.changeBaseKeyByIndex(
+                                                  entry.key, v);
+                                              setState(() {});
+                                            },
+                                            style: TextStyle(fontSize: 30.h),
+                                            controller:
+                                                TextEditingController.fromValue(
+                                                    TextEditingValue(
+                                                        text: entry.value.key)),
+                                          ),
+                                          SizedBox(
+                                            height: 35.h,
+                                          ),
+                                          Text(
+                                            "默认值",
+                                            style: TextStyle(
+                                              fontSize: 30.h,
+                                            ),
+                                          ),
+                                          TextField(
+                                            onChanged: (v) {
+                                              fileStore.changeBaseValueByIndex(
+                                                  entry.key, v);
+                                              setState(() {});
+                                            },
+                                            style: TextStyle(fontSize: 30.h),
+                                            controller:
+                                                TextEditingController.fromValue(
+                                                    TextEditingValue(
+                                                        text:
+                                                            entry.value.value)),
+                                          )
+                                        ],
+                                      ),
+                                    ));
+                              });
+                        },
+                        child: Row(
+                          children: [
+                            Text(
+                              entry.value.key,
+                              style: TextStyle(fontSize: 35.h),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                     TextButton(
                       onPressed: () async {
@@ -114,7 +178,7 @@ class _BaseItemChangeState extends WPageState {
                   ],
                 ));
           }).toList(),
-          onReorder: _onReorder,
+          onReorder: fileStore.reorderBase,
         );
       }),
     );

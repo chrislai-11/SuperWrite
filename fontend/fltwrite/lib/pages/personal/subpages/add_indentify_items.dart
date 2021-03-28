@@ -1,22 +1,22 @@
 import 'package:fltwrite/common/wpage.dart';
+import 'package:fltwrite/pages/personal/components/add_identify_widget.dart';
 import 'package:fltwrite/pages/personal/components/add_input_widget.dart';
 import 'package:fltwrite/store/file.dart';
 import 'package:fltwrite/store/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AddBaseItems extends WPage {
+class AddIdentifyItems extends WPage {
   @override
-  _AddBaseItemsState createState() => _AddBaseItemsState();
+  _AddIdentifyItemsState createState() => _AddIdentifyItemsState();
 }
 
-class _AddBaseItemsState extends WPageState {
+class _AddIdentifyItemsState extends WPageState {
   final String barTitle = "添加";
   final bool hasBottomBar = false;
   FileStore fileStore = FileStore();
   List<Widget> inputs = [];
   int addCount = 0;
-  List<String> addingLabels = [];
   List<String> addingValues = [];
 
   @override
@@ -27,10 +27,11 @@ class _AddBaseItemsState extends WPageState {
   }
 
   void addInputWidget() {
-    addingLabels.add('');
     addingValues.add('');
-    inputs.add(AddInputWidget(
-        label: addCount, labelChange: addingLabels, valueChange: addingValues));
+    inputs.add(AddIdentifyWidget(
+      label: addCount,
+      valueChange: addingValues,
+    ));
     addCount++;
   }
 
@@ -75,13 +76,8 @@ class _AddBaseItemsState extends WPageState {
                             Size(double.infinity, 100.h)),
                       ),
                       onPressed: () {
-                        print(addingLabels);
                         print(addingValues);
-                        List<FileItem> temp = [];
-                        for (int i = 0; i < addingLabels.length; i++) {
-                          temp.add(FileItem(addingLabels[i], addingValues[i]));
-                          fileStore.addBaseItem(temp);
-                        }
+                        fileStore.addIdentifyItem(addingValues);
                         Navigator.pop(context);
                       },
                       child: Text("提交")),

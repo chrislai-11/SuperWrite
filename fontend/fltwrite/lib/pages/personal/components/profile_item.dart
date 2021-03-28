@@ -5,7 +5,13 @@ class ProfileItem extends StatelessWidget {
   final String label;
   final Function onTap;
   final BoxBorder border;
-  ProfileItem({Key key, @required this.label, this.onTap, this.border})
+  final bool rightIcon;
+  ProfileItem(
+      {Key key,
+      @required this.label,
+      this.onTap,
+      this.border,
+      this.rightIcon = true})
       : super(key: key);
   Widget build(BuildContext context) {
     return TextButton(
@@ -29,7 +35,11 @@ class ProfileItem extends StatelessWidget {
                   fontSize: 35.h,
                   color: Colors.black),
             ),
-            Icon(Icons.keyboard_arrow_right, size: 60.w, color: Colors.black)
+            Opacity(
+              opacity: rightIcon ? 1 : 0,
+              child: Icon(Icons.keyboard_arrow_right,
+                  size: 60.w, color: Colors.black),
+            ),
           ],
         ),
       ),
