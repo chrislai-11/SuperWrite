@@ -33,7 +33,7 @@ class _ChangeProfileState extends WPageState {
     nicknameController.value = TextEditingValue(text: profileStore.nickname);
     schoolController.value = TextEditingValue(text: profileStore.school);
     majorContoller.value = TextEditingValue(text: profileStore.major);
-    phoneController.value = TextEditingValue(text: profileStore.telephone);
+    phoneController.value = TextEditingValue(text: profileStore.email);
   }
 
   Future<void> openGallery() async {
@@ -66,63 +66,6 @@ class _ChangeProfileState extends WPageState {
           child: $observer((_) {
             return Column(
               children: [
-                Center(
-                  child: TextButton(
-                      child: CircleAvatar(
-                        radius: 80.w,
-                        backgroundImage: AssetImage(profileStore.avatuar),
-                      ),
-                      onPressed: () => showModalBottomSheet(
-                          backgroundColor: Colors.transparent,
-                          context: context,
-                          builder: (_) {
-                            return Container(
-                              padding:
-                                  EdgeInsets.only(bottom: 120.h, top: 30.h),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(30.r),
-                                      topRight: Radius.circular(30.r)),
-                                  color: Colors.white),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  ListTile(
-                                    leading: Icon(
-                                      Icons.camera_alt_outlined,
-                                      size: 45.h,
-                                    ),
-                                    title: Text(
-                                      "拍照",
-                                      style: TextStyle(fontSize: 35.h),
-                                    ),
-                                    onTap: () async {
-                                      await takePhoto();
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  ListTile(
-                                    leading: Icon(
-                                      Icons.photo_library_outlined,
-                                      size: 45.h,
-                                    ),
-                                    title: Text(
-                                      "从相册选择",
-                                      style: TextStyle(fontSize: 35.h),
-                                    ),
-                                    onTap: () async {
-                                      await openGallery();
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                ],
-                              ),
-                            );
-                          })
-                      // Navigator.pushNamed(context, '/takePhoto');
-                      ),
-                ),
                 TextFieldChange(
                   label: "昵称",
                   txcontroller: nicknameController,

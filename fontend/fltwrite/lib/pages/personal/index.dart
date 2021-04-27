@@ -29,15 +29,13 @@ class _PersonalPageState extends WPageState {
       padding: EdgeInsets.fromLTRB(50.w, 80.h, 50.w, 50.h),
       child: Column(
         children: [
-          $observer((_) {
-            return ProfileCard(
-                avatuar: profileStore.avatuar,
-                nickname: profileStore.nickname,
-                school: profileStore.school,
-                onTap: () {
-                  Navigator.pushNamed(context, '/changeProfile');
-                });
-          }),
+          ProfileCard(
+            nickname: profileStore.nickname,
+            school: profileStore.school,
+            onTap: () {
+              Navigator.pushNamed(context, '/changeProfile');
+            },
+          ),
           //items
           ProfileItem(
             label: "报告基本信息",

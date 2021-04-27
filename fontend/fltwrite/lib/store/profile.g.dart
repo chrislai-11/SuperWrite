@@ -9,21 +9,6 @@ part of 'profile.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ProfileStore on _ProfileStore, Store {
-  final _$tokenAtom = Atom(name: '_ProfileStore.token');
-
-  @override
-  String get token {
-    _$tokenAtom.reportRead();
-    return super.token;
-  }
-
-  @override
-  set token(String value) {
-    _$tokenAtom.reportWrite(value, super.token, () {
-      super.token = value;
-    });
-  }
-
   final _$nicknameAtom = Atom(name: '_ProfileStore.nickname');
 
   @override
@@ -54,21 +39,6 @@ mixin _$ProfileStore on _ProfileStore, Store {
     });
   }
 
-  final _$avatuarAtom = Atom(name: '_ProfileStore.avatuar');
-
-  @override
-  String get avatuar {
-    _$avatuarAtom.reportRead();
-    return super.avatuar;
-  }
-
-  @override
-  set avatuar(String value) {
-    _$avatuarAtom.reportWrite(value, super.avatuar, () {
-      super.avatuar = value;
-    });
-  }
-
   final _$majorAtom = Atom(name: '_ProfileStore.major');
 
   @override
@@ -84,34 +54,45 @@ mixin _$ProfileStore on _ProfileStore, Store {
     });
   }
 
-  final _$telephoneAtom = Atom(name: '_ProfileStore.telephone');
+  final _$emailAtom = Atom(name: '_ProfileStore.email');
 
   @override
-  String get telephone {
-    _$telephoneAtom.reportRead();
-    return super.telephone;
+  String get email {
+    _$emailAtom.reportRead();
+    return super.email;
   }
 
   @override
-  set telephone(String value) {
-    _$telephoneAtom.reportWrite(value, super.telephone, () {
-      super.telephone = value;
+  set email(String value) {
+    _$emailAtom.reportWrite(value, super.email, () {
+      super.email = value;
     });
+  }
+
+  final _$updateAllAsyncAction = AsyncAction('_ProfileStore.updateAll');
+
+  @override
+  Future<void> updateAll(dynamic _nickname, dynamic _school, dynamic _major) {
+    return _$updateAllAsyncAction
+        .run(() => super.updateAll(_nickname, _school, _major));
+  }
+
+  final _$getAllAsyncAction = AsyncAction('_ProfileStore.getAll');
+
+  @override
+  Future<void> getAll() {
+    return _$getAllAsyncAction.run(() => super.getAll());
+  }
+
+  final _$changePwdAsyncAction = AsyncAction('_ProfileStore.changePwd');
+
+  @override
+  Future<void> changePwd() {
+    return _$changePwdAsyncAction.run(() => super.changePwd());
   }
 
   final _$_ProfileStoreActionController =
       ActionController(name: '_ProfileStore');
-
-  @override
-  void setToken(dynamic _token) {
-    final _$actionInfo = _$_ProfileStoreActionController.startAction(
-        name: '_ProfileStore.setToken');
-    try {
-      return super.setToken(_token);
-    } finally {
-      _$_ProfileStoreActionController.endAction(_$actionInfo);
-    }
-  }
 
   @override
   void setNickname(dynamic _name) {
@@ -125,14 +106,45 @@ mixin _$ProfileStore on _ProfileStore, Store {
   }
 
   @override
+  void setSchool(dynamic _school) {
+    final _$actionInfo = _$_ProfileStoreActionController.startAction(
+        name: '_ProfileStore.setSchool');
+    try {
+      return super.setSchool(_school);
+    } finally {
+      _$_ProfileStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setMajor(dynamic _major) {
+    final _$actionInfo = _$_ProfileStoreActionController.startAction(
+        name: '_ProfileStore.setMajor');
+    try {
+      return super.setMajor(_major);
+    } finally {
+      _$_ProfileStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setEmail(dynamic _email) {
+    final _$actionInfo = _$_ProfileStoreActionController.startAction(
+        name: '_ProfileStore.setEmail');
+    try {
+      return super.setEmail(_email);
+    } finally {
+      _$_ProfileStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-token: ${token},
 nickname: ${nickname},
 school: ${school},
-avatuar: ${avatuar},
 major: ${major},
-telephone: ${telephone}
+email: ${email}
     ''';
   }
 }

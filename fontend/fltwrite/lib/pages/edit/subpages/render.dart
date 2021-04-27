@@ -1,5 +1,6 @@
 import 'dart:io';
-
+import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:fltwrite/common/wpage.dart';
 import 'package:fltwrite/pages/edit/components/choose_type_button.dart';
 import 'package:fltwrite/pages/edit/components/image_container.dart';
@@ -22,6 +23,7 @@ class _RenderPageState extends WPageState {
   final String barTitle = "编辑";
   FileStore fileStore = FileStore();
   List para;
+  Map<String, dynamic> postData = Map();
 
   @override
   void initState() {
@@ -38,10 +40,98 @@ class _RenderPageState extends WPageState {
     });
   }
 
+  Future<String> postGenerate() async {
+    String url = "http://127.0.0.1:5000/generateDocx/";
+
+    ///创建Dio
+    Dio dio = new Dio();
+    FormData formdata = FormData.fromMap(postData);
+
+    ///发起post请求
+    Response response = await dio.post(url, data: formdata);
+    return response.data['path'];
+  }
+
+  Future<void> download() async {
+    List postList = [];
+    int imgIndex = 0;
+    fileStore.editWidgets.forEach((element) async {
+      var temp;
+      if (element.type == EditType.title) {
+        temp = {'type': 'title', 'value': element.content};
+      } else if (element.type == EditType.content) {
+        temp = {'type': 'content', 'value': element.content};
+      } else if (element.type == EditType.image) {
+        temp = {'type': 'image', 'value': imgIndex.toString()};
+        // print(element.content.path);
+        var img = await MultipartFile.fromFile(element.content.path);
+        // print(img);
+        postData['image' + imgIndex.toString()] = img;
+        imgIndex++;
+      }
+      postList.add(json.encode(temp));
+    });
+    postData['text'] = json.encode(postList);
+  }
+
+  // Future<void> downloadSaveFile(path) async {
+  //   Dio dio = Dio();
+  //   PermissionStatus status = await PermissionHandler()
+  //       .checkPermissionStatus(PermissionGroup.storage);
+  //   //判断如果还没拥有读写权限就申请获取权限
+  //   if (status != PermissionStatus.granted) {
+  //     var map = await PermissionHandler()
+  //         .requestPermissions([PermissionGroup.storage]).then((value) {
+  //       print(value);
+  //     });
+  //     if (map[PermissionGroup.storage] == PermissionStatus.granted) {
+  //       status = PermissionStatus.granted;
+  //     }
+  //   }
+  //   if (true) {
+  //     String dirloc = "";
+  //     if (Platform.isAndroid) {
+  //       dirloc = "/sdcard/download/";
+  //     } else {
+  //       dirloc = (await getTemporaryDirectory()).path;
+  //       dirloc = dirloc.replaceFirst("Library/Caches", "Documents/");
+  //     }
+  //     try {
+  //       FileUtils.mkdir([dirloc]);
+  //       await dio.download("http://127.0.0.1:5000" + path, dirloc + 'test.docx',
+  //           onReceiveProgress: (receivedBytes, totalBytes) {
+  //         setState(() {});
+  //       });
+  //     } catch (e) {
+  //       print(e);
+  //     }
+  //   }
+  // }
+
   Widget buildAppBar(BuildContext context) {
     return AppBar(
       title: Text(barTitle),
-      actions: [MorePopMenu()],
+      actions: [
+        PopupMenuButton<PopMenuType>(
+          icon: Icon(Icons.more_vert),
+          itemBuilder: (BuildContext context) => <PopupMenuItem<PopMenuType>>[
+            selectView(Icons.download_done_rounded, '下载', PopMenuType.download),
+            selectView(Icons.reorder_rounded, '识别项', PopMenuType.identify),
+          ],
+          onSelected: (PopMenuType action) async {
+            // 点击选项的时候
+            switch (action) {
+              case PopMenuType.download:
+                await download();
+                String path = await postGenerate();
+                print(path);
+                break;
+              case PopMenuType.identify:
+                break;
+            }
+          },
+        )
+      ],
     );
   }
 
@@ -64,9 +154,6 @@ class _RenderPageState extends WPageState {
                     title: temp.content,
                     onChange: (v) {
                       fileStore.changeContent(index, v);
-                      fileStore.editWidgets.forEach((element) {
-                        print(element.content);
-                      });
                     },
                   );
                 } else if (temp.type == EditType.content) {
@@ -74,12 +161,9 @@ class _RenderPageState extends WPageState {
                     content: temp.content,
                     onChange: (v) {
                       fileStore.changeContent(index, v);
-                      fileStore.editWidgets.forEach((element) {
-                        print(element.content);
-                      });
                     },
                   );
-                } else if (temp.type == EditType.image) {
+                } else {
                   return ImageContainer(path: temp.content);
                 }
               },
@@ -87,14 +171,14 @@ class _RenderPageState extends WPageState {
                 return ChooseTypeButton(
                     index: index,
                     addTitle: () {
-                      print(index);
+                      // print(index);
                       fileStore.insertEditWidget(
                           index + 1, EditWidget(EditType.title, ""));
                       setState(() {});
                       Navigator.pop(context);
                     },
                     addContent: () {
-                      print(index);
+                      // print(index);
                       fileStore.insertEditWidget(
                           index + 1, EditWidget(EditType.content, ""));
                       setState(() {});

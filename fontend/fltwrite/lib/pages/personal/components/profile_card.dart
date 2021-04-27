@@ -4,24 +4,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProfileCard extends StatelessWidget {
   final Function onTap;
-  final String avatuar;
   final String nickname;
   final String school;
 
   final ProfileStore profileStore = ProfileStore();
 
   ProfileCard(
-      {Key key,
-      @required this.avatuar,
-      @required this.nickname,
-      @required this.school,
-      this.onTap})
+      {Key key, @required this.nickname, @required this.school, this.onTap})
       : super(key: key);
 
   Widget build(BuildContext context) {
     return TextButton(
       style: ButtonStyle(
         padding: MaterialStateProperty.all(EdgeInsets.all(0.0)),
+        overlayColor: MaterialStateProperty.all(Colors.transparent),
       ),
       onPressed: () {
         onTap();
@@ -35,44 +31,20 @@ class ProfileCard extends StatelessWidget {
             boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 20.0.r)]),
         width: double.infinity,
         height: 300.h,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-                child: Row(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(right: 60.w),
-                  child: CircleAvatar(
-                    radius: 80.w,
-                    // imagePath 按需修改
-                    backgroundImage: AssetImage(avatuar),
-                  ),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      nickname,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 40.h,
-                          color: Colors.black),
-                    ),
-                    Text(
-                      school,
-                      style: TextStyle(color: Colors.black87),
-                    )
-                  ],
-                ),
-              ],
-            )),
-            Icon(
-              Icons.keyboard_arrow_right,
-              size: 60.w,
-              color: Colors.black,
+            Text(
+              nickname,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 50.h,
+                  color: Colors.black),
+            ),
+            Text(
+              school,
+              style: TextStyle(color: Colors.black87, fontSize: 30.h),
             )
           ],
         ),

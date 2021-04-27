@@ -1,8 +1,6 @@
 import 'package:fltwrite/common/wpage.dart';
 import 'package:fltwrite/pages/personal/components/add_identify_widget.dart';
-import 'package:fltwrite/pages/personal/components/add_input_widget.dart';
 import 'package:fltwrite/store/file.dart';
-import 'package:fltwrite/store/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

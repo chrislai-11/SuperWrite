@@ -7,6 +7,8 @@ import 'package:fltwrite/pages/personal/subpages/add_indentify_items.dart';
 import 'package:fltwrite/pages/personal/subpages/base_item_change.dart';
 import 'package:fltwrite/pages/personal/subpages/change_profile.dart';
 import 'package:fltwrite/pages/personal/subpages/identify_change.dart';
+import 'package:fltwrite/pages/register/create_user.dart';
+import 'package:fltwrite/pages/register/index.dart';
 import 'package:fltwrite/pages/take_photo/index.dart';
 
 import 'package:flutter/material.dart';
@@ -22,4 +24,6 @@ Map<String, WidgetBuilder> wroutes = {
   '/render': (BuildContext context) => RenderPage(),
   '/addBaseItem': (BuildContext context) => AddBaseItems(),
   '/addIdentifyItem': (BuildContext context) => AddIdentifyItems(),
+  '/register': (BuildContext context) => RegisterPage(),
+  '/createUser': (BuildContext context) => CreateUser(),
 };

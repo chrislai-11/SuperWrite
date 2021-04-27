@@ -23,7 +23,7 @@ class _IdentifyChangeState extends WPageState {
     fileStore = this.$store('file');
   }
 
-  _onReorder(int oldIndex, int newIndex) {
+  void onReorder(int oldIndex, int newIndex) {
     // print('oldIndex: $oldIndex , newIndex: $newIndex');
     setState(() {
       if (newIndex == fileStore.identifyItemList.length) {

@@ -1,6 +1,3 @@
-import 'package:fltwrite/pages/edit/components/read_content.dart';
-import 'package:fltwrite/pages/edit/components/subtitle.dart';
-import 'package:fltwrite/store/file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

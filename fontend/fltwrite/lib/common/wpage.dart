@@ -29,6 +29,11 @@ class WPageState extends State<WPage> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   Widget buildAppBar(BuildContext context) {
     return null;
   }
@@ -62,7 +67,7 @@ class WPageState extends State<WPage> {
         appBar: hasAppBar
             ? AppBar(
                 title: Text(barTitle),
-                leading: null,
+                backgroundColor: Color.fromRGBO(131, 135, 230, 1),
               )
             : this.buildAppBar(context),
         body: this.buildBody(context),
@@ -73,15 +78,15 @@ class WPageState extends State<WPage> {
                   BottomNavigationBarItem(
                       icon: Icon(Icons.home_outlined),
                       label: "首页",
-                      backgroundColor: Colors.blue),
+                      backgroundColor: Color.fromRGBO(131, 135, 230, 1)),
                   BottomNavigationBarItem(
                       icon: Icon(Icons.edit_outlined),
                       label: "编辑",
-                      backgroundColor: Colors.blue),
+                      backgroundColor: Color.fromRGBO(131, 135, 230, 1)),
                   BottomNavigationBarItem(
                       icon: Icon(Icons.person_outline),
                       label: "我的",
-                      backgroundColor: Colors.blue),
+                      backgroundColor: Color.fromRGBO(131, 135, 230, 1)),
                 ],
                 onTap: (index) {
                   switch (index) {

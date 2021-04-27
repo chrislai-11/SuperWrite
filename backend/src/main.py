@@ -1,65 +1,149 @@
-from flask import Flask, Response,request
+from flask import Flask, Response,request,send_from_directory,send_file,make_response
+
 from flask_sqlalchemy import SQLAlchemy
+
 from docx import Document
+
 import json
 import os
 import re
-import pymysql
 import datetime
 
+from common import *
+from model import *
+from document import *
 import config
-from ext import db
-from model import userInfo
 
 app = Flask(__name__)
 app.config.from_object(config)
-db.init_app(app)
+with app.app_context(): 
+    db.init_app(app)
+    # db.drop_all()
+    db.create_all()
 
-def dbAuthorization():
-    db = pymysql.connect("localhost", "root", "chris123", "superwrite")
-    db_cursor = db.cursor()
-    return db, db_cursor
+################################################ API ############################################
 
 # 检查连通性
-@app.route('/', methods=['GET'])
+@app.route('/check/', methods=['POST'])
 def getTest():
-   return 'SUPERWRITE server is working ...',200
+    data = formToDict(request.form)
+    userExit = userInfo.query.filter(userInfo.email == data['email']).first()
+    if userExit == None or userExit.email == None or userExit.password == None or userExit.nickname == None or userExit.school == None or userExit.major == None:
+        return {}, 401
+    else:
+        return {}, 200
 
+# 获得验证码
+@app.route('/getVerifyCode/', methods=['POST'])
+def getVerifyCode():
+    data = formToDict(request.form)
+    result, code = sendVerifyCode(data['email'])
+    if result:
+        db.session.add(tempTable(data['email'], code))
+        db.session.commit()
+        return {}, 200
+    else:
+        return {}, 502
+
+# 用户登录注册
 @app.route('/register/', methods=['POST'])
-def registerAndLogin():
-    form = request.form
-    data = json.loads(json.dumps(form))
-    print(data, type(data))
+def register():
+    data = formToDict(request.form)
+    email = data['email']
+    pwd = data['password']
+    verify = data['verify']
 
-    avatuarPath = os.path.join('../receive/image/',data['phone'])
-    if not os.path.exists(avatuarPath):
-        os.mkdir(avatuarPath)
-
-    files = request.files
-    for key,f in files.items():
-        print(key)
-        if key == 'avatuar':
-            print(f)
-            now = datetime.datetime.now() 
-            # 文件上传时间
-            filetime = now.strftime("%Y-%m-%d-%H:%M:%S")
-            # 文件名
-            filename = os.path.splitext(f.filename)[0]
-            # 文件后缀
-            filetype = os.path.splitext(f.filename)[1]
-            #存储路径
-            filepath = os.path.join('../receive/image/'+data['phone'],filename+'-'+filetime+filetype)
-            f.save(filepath)
+    # 验证码
+    checkVerify = tempTable.query.filter(tempTable.email == email).order_by(tempTable.id.desc()).first()
+    print(checkVerify)
+    if checkVerify is None or checkVerify.code != verify:
+        return {}, 403
     
-    result = userInfo.query.all()
-    print(result)
 
-    return 'Welcome!',200
+    userExit = userInfo.query.filter(userInfo.email == email).first()
+    isExit = False
+    pwdRight = False
+
+    # 用户不存在
+    if userExit is None:
+        print('创建用户:' + email + ' ' + pwd)
+        db.session.add(userInfo(email, pwd))
+        db.session.commit()
+    elif userExit.nickname==None or userExit.school==None or userExit.major==None:
+        userExit.password = pwd
+        db.session.commit()
+    else:
+        print('用户登录:' + email)
+        isExit = True
+        if userExit.password == pwd:
+            pwdRight = True
+
+    return {
+        'exit': isExit,
+        'pwdRight': pwdRight
+    }, 200
+
+# 修改密码
+@app.route('/changePwd/', methods=['POST'])
+def changePwd():
+    data = formToDict(request.form)
+
+    userExit = userInfo.query.filter(userInfo.email == data['email']).first()
+    
+    userExit.password = data['password']
+    db.session.commit()
+
+    return {}, 200
+
+# 更新个人资料
+@app.route('/updateUser/', methods=['POST'])
+def updateUserInfo():
+    data = formToDict(request.form)
+
+    userExit = userInfo.query.filter(userInfo.email == data['email']).first()
+    
+    userExit.nickname = data['nickname']
+    userExit.school = data['school']
+    userExit.major = data['major']
+    db.session.commit()
+
+    return {}, 200
+
+# 获取个人资料
+@app.route('/getUserInformation/', methods=['POST'])
+def getUserInformation():
+    data = formToDict(request.form)
+    userReq = userInfo.query.filter(userInfo.email == data['email']).first()
+
+    return {
+        'nickname': userReq.nickname,
+        'school': userReq.school,
+        'major': userReq.major
+    }, 200
+
+
+@app.route('/generateDocx/', methods=['POST'])
+def generateDocx():
+    form = request.form
+    data = formToDict(form)
+    text = json.loads(data['text'])
+
+    files = request.files.to_dict()
+    print(files)
+    
+    textList = []
+    for part in text:
+        partition = json.loads(part)
+        textList.append(partition)
+    
+    path = generateReport(textList, files)
+    return {'path': path}, 200
+
 
 @app.route('/uploadDocx/', methods=['POST']) # 上传路径
 def uploadDocx():
     form = request.form #获得表单数据 除了file
-    data = json.loads(json.dumps(form)) #转成dict
+    data = formToDict(form) #转成dict
     titles = pickTitles(data) #需要匹配的title
     print(titles)
 
@@ -78,59 +162,6 @@ def uploadDocx():
     return {
         'para': pickOutText
     }, 200
-    
-
-#返回需要匹配的title
-def pickTitles(data):
-    titles = []
-    for key in data:
-        if re.search(r'title(\d+)$',key) != None:
-            titles.append(data[key])
-    return titles
-
-
-def dealWithDocx(file, titles):
-    result = []
-
-    temp_title = ''
-    real_title = ''
-    temp_content = []
-
-    #获取文档
-    raw = Document(file)
-
-    for para in raw.paragraphs:
-        line = para.text
-        print(line)
-        is_match = False
-        for title in titles:
-            # 编码后匹配
-            pattern_encode = title.encode('utf-8').strip()
-            line_encode = line.encode('utf-8').strip()
-            if re.search(pattern_encode, line_encode):
-                print(title)
-                if temp_title != '':
-                    if temp_title == title:
-                        break
-                    result.append({
-                        real_title : ''.join(temp_content)
-                    })
-                    temp_title = title
-                    real_title = line
-                    temp_content = []
-                else:
-                    temp_title = title
-                    real_title = line
-                    temp_content = []
-                is_match = True
-                break
-        if not is_match:
-            if temp_title != '':
-                temp_content.append(line)
-    result.append({
-        real_title : ''.join(temp_content)
-    })
-    return result
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)

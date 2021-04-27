@@ -95,7 +95,7 @@ class _EditPageState extends WPageState {
                   shadowColor: MaterialStateProperty.all(Colors.grey)),
               onPressed: () async {
                 await _openFileExplorer();
-                // print(files.toString());
+                print(files.toString());
                 await postRequestFunction();
               },
               child: Text("打开文件"),
@@ -113,8 +113,6 @@ class _EditPageState extends WPageState {
             onPressed: () async {},
             child: Text("继续编辑"),
           ),
-          Image.file(File(
-              '/Users/chris/Library/Developer/CoreSimulator/Devices/9FBE838E-D711-40E1-82A6-22A6545246CB/data/Containers/Data/Application/FC6A85E0-29A3-4995-9CD4-6B72900275C7/tmp/image_picker_2B953886-A4CA-4C06-81D4-D4BBF0834CB7-49466-000030688B1B895E.jpg'))
         ],
       ),
     );

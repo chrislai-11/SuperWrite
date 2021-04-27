@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-enum PopMenuType { download, reload, identify }
+enum PopMenuType { download, identify }
 
 Widget selectView(IconData icon, String text, PopMenuType id) {
   return new PopupMenuItem<PopMenuType>(
@@ -18,21 +18,21 @@ Widget selectView(IconData icon, String text, PopMenuType id) {
 }
 
 class MorePopMenu extends StatelessWidget {
-  MorePopMenu({Key key}) : super(key: key);
+  final Function download;
+  final Function identify;
+  MorePopMenu({Key key, this.download, this.identify}) : super(key: key);
   Widget build(BuildContext context) {
     return new PopupMenuButton<PopMenuType>(
       icon: Icon(Icons.more_vert),
       itemBuilder: (BuildContext context) => <PopupMenuItem<PopMenuType>>[
         selectView(Icons.download_done_rounded, '下载', PopMenuType.download),
-        selectView(Icons.refresh_rounded, '重新识别', PopMenuType.reload),
         selectView(Icons.reorder_rounded, '识别项', PopMenuType.identify),
       ],
       onSelected: (PopMenuType action) {
         // 点击选项的时候
         switch (action) {
           case PopMenuType.download:
-            break;
-          case PopMenuType.reload:
+            download();
             break;
           case PopMenuType.identify:
             break;
